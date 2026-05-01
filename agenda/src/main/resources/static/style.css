@@ -1,0 +1,55 @@
+
+
+
+/*Personalizar o imput*/
+#formulario{
+    background-color: rgb(121, 122, 122);
+    color: rgb(0, 62, 185);
+    padding: 20px;
+    width: 300px;
+    height: 180px;
+    align-content: center;
+    border-radius: 20px;
+    border: solid black 2px;
+    box-shadow: 2px 2px 5px rgb(0, 0, 0);
+}
+
+
+
+/*Personalizando a lista*/
+#lista {
+    background-color: rgb(158, 158, 158);
+    height: 100px;
+    width: 100px;
+}
+
+#list{
+    background-color: rgb(182, 182, 182);
+    height: 100px;
+    width: 100px;
+}
+
+ul{ 
+    display: grid;
+    border-radius: 20px;
+    list-style-type: none;
+    border: solid black 2px;
+    box-shadow: 2px 2px 5px rgb(0, 0, 0);
+};
+
+ul li{
+    gap: 0px;
+    margin: 0px;
+    height: 100px;
+    width: 100px;
+}
+
+ul li div{
+    color: rgb(114, 114, 114);
+    background-color: rgb(211, 211, 211);
+    height: 100px;
+    width: 100px;
+    border-radius: 5px;
+    text-align: center;
+    align-content: center;
+};

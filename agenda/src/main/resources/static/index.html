@@ -1,0 +1,140 @@
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Agendamento</title>
+    </head>
+    <body>
+
+        <header> 
+            <h1>Lista de agendamento</h1>
+        </header>
+        
+        <main>
+            <div id="formulario">
+
+                <input type="text" id="nomeCliente" placeholder="Nome"><br><br>
+                <input type="date" id="data" placeholder="Data">
+                <input type="time" id="hora" placeholder="Hora"><br><br>
+                <input type="text" id="descricao" placeholder="Descrição"><br><br>
+                
+                <button onclick="criarAgendamento()">Criar</button>
+                
+            </div>
+
+                <h2>Lista:</h2>
+                <ul id="lista"></ul>
+        </main>
+
+        <footer>
+
+        </footer>
+            
+            <script>
+
+                if (!localStorage.getItem("token")){
+                    window.location.href = "login.html"
+                }
+
+                function criarAgendamento(){
+                    const agendamento = {
+                        nomeCliente: document.getElementById("nomeCliente").value,
+                        data: document.getElementById("data").value,
+                        hora: document.getElementById("hora").value,
+                        descricao: document.getElementById("descricao").value,
+                        
+                    };
+                    
+                    
+                    
+                fetch("http://localhost:8080/agendamentos",{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(agendamento)
+                
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    listar();
+                });
+            }
+
+            function listar(){
+
+                fetch("http://localhost:8080/agendamentos")
+                .then(res => res.json())
+                .then(data => {
+                    const lista = document.getElementById("lista"); 
+                    lista.innerHTML = "";
+                    
+                    let contador = 1;
+                    
+                    function gerarId (){
+                        return contador++;
+                    };
+                    
+                    data.forEach(a => {
+
+                        //Cria botão e adiciona a function
+                        const excluirAgendamento = document.createElement("button");
+                        excluirAgendamento.innerText = "Excluir";
+                        excluirAgendamento.onclick = function(){
+                            fetch(`http://localhost:8080/agendamentos/${a.id}`,{
+                                method: "DELETE"
+                            })
+                            .then(res => res.text())
+                            .then(() =>{
+                                listar();
+                            }); 
+                        };
+                        
+                        //Cria o botão de confirmar presença
+                        const confirmar = document.createElement("button");
+                        confirmar.innerText = "Confirmar Presença"
+                        //Função para atualizar status do agendamento
+                        confirmar.onclick = function(){
+                        fetch (`http://localhost:8080/agendamentos/confirmar/${a.id}`, {
+                            method: "POST"
+                        })
+                        .then(response =>{
+                            if(response.ok){
+                                listar();
+                            }
+                        });
+                    };
+                        
+                        //Cria um elemnto de DIV e pucha o excluirAgendamento
+                        const item = document.createElement("div");
+                        item.id = a.id;
+                        item.innerText = a.nomeCliente + " - " + a.data + " " + a.hora + " - " + a.descricao + " - " + a.status;
+                        item.appendChild(excluirAgendamento);
+                        item.appendChild(confirmar);
+
+                        //Cria uma lista ordenada no html
+                        const list = document.createElement("li");;
+                        
+                        //Adiciona item no list
+                        list.appendChild(item);
+
+                        //Adicina list ao lista
+                        lista.appendChild(list);
+                        
+                        
+                        
+                        }
+                    )});
+                };
+            
+            
+            console.log("agora estou aqui")
+            listar();
+
+            </script>
+    </body>
+    </html>
