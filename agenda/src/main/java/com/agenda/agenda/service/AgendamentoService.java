@@ -4,22 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import com.agenda.agenda.model.Agendamento;
 import com.agenda.agenda.model.StatusAgendamentos;
-import com.agenda.agenda.controller.StatusController;
+import com.agenda.agenda.repository.AgendamentoRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AgendamentoService {
     
-    private List<Agendamento> lista = new ArrayList<>();
-    private int contador = 1;
+    @Autowired
+    private AgendamentoRepository repository;
 
      public List<Agendamento> listar() {
-         return lista;
+         return repository.findAll();
      }
  
      public Agendamento criar(Agendamento agendamento){
 
-        
+        List<Agendamento> lista = repository.findAll();
+        System.out.println("CHEGOU NO SERVICE");
+
             for(Agendamento a : lista){
                 if (a.getData().equals(agendamento.getData()) &&
                 a.getHora().equals(agendamento.getHora())) {
@@ -28,26 +32,13 @@ public class AgendamentoService {
             }
         }
 
-        agendamento.setId(contador++);
-        lista.add(agendamento);
-
-        return agendamento;
-    }
-
-    public String remover(int id) {
-
-        for (Agendamento a : lista) {
-            if (a.getId() == id) {
-                lista.remove(a);
-                return "Removido!";
-            }
-        }
-
-        return "ID não encontrado!";
+        return repository.save(agendamento);
     }
     
 
-     public void confirmar(int id){
+     public void confirmar(Integer id){
+        List<Agendamento> lista = repository.findAll();
+
         for(Agendamento a : lista){
             if(a.getId() == id){
                 a.setStatus(StatusAgendamentos.CONFIRMADO);
@@ -56,8 +47,17 @@ public class AgendamentoService {
             }
     }
 
-    public void cancelar(int id) {
-        lista.get(id).setStatus(StatusAgendamentos.CANCELADO);
+    public boolean verificar(Integer id){
+        return repository.existsById(id);
+    }
+
+    public void cancelar(Integer id) {
+
+              if (!repository.existsById(id)) {
+                throw new RuntimeException("Agendamento não encontrado");
+              }
+        
+              repository.deleteById(id);
     }
 
 }

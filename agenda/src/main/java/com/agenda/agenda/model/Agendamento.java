@@ -1,16 +1,27 @@
 package com.agenda.agenda.model;
 
-    
-    
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.annotation.Generated;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-public class Agendamento {
+@Entity
+public class Agendamento {  
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private String nomeCliente;
-    private int id;
     private String data;
     private String hora;
     private String descricao;
     private StatusAgendamentos status;
+
 
 
     public int getId() {
@@ -60,8 +71,6 @@ public class Agendamento {
     public void setStatus(StatusAgendamentos status){
         this.status = status;
     };
-
-    
 
 }
 

@@ -1,11 +1,11 @@
 package com.agenda.agenda.controller;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import com.agenda.agenda.repository.AgendamentoRepository;
+import com.agenda.agenda.model.AgendaEnity;
 import com.agenda.agenda.model.Agendamento;
 import com.agenda.agenda.service.AgendamentoService;
 
@@ -17,6 +17,7 @@ public class AgendamentoController {
     
     @Autowired
     private AgendamentoService service;
+    private AgendamentoRepository repository;
 
     @GetMapping
     public List<Agendamento> listar(){
@@ -29,10 +30,6 @@ public class AgendamentoController {
         System.out.println("CRIAR FOI CHAMADO");
         return service.criar(agendamento);
     }
-
-    @DeleteMapping("/{id}")
-    public String remove (@PathVariable int id){
-        return service.remover(id);
-    }
+    
    
 }

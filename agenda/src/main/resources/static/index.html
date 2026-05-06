@@ -9,7 +9,7 @@
     <body>
 
         <header> 
-            <h1>Lista de agendamento</h1>
+            <h1>Agenda de serviços</h1>
         </header>
         
         <main>
@@ -25,7 +25,9 @@
             </div>
 
                 <h2>Lista:</h2>
-                <ul id="lista"></ul>
+                <div id="div-agendamentos">
+                    <ul id="lista"></ul>
+                </div>
         </main>
 
         <footer>
@@ -82,16 +84,28 @@
                     data.forEach(a => {
 
                         //Cria botão e adiciona a function
-                        const excluirAgendamento = document.createElement("button");
+                                                const excluirAgendamento = document.createElement("button");
                         excluirAgendamento.innerText = "Excluir";
-                        excluirAgendamento.onclick = function(){
-                            fetch(`http://localhost:8080/agendamentos/${a.id}`,{
-                                method: "DELETE"
+                        excluirAgendamento.type = "button";
+
+                        excluirAgendamento.onclick = function(e){
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            fetch(`http://localhost:8080/agendamentos/${a.id}`, {
+                                method: "DELETE",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
                             })
-                            .then(res => res.text())
+                            .then(res => {
+                                console.log("STATUS:", res.status);
+                                return res.text();
+                            })
                             .then(() =>{
                                 listar();
-                            }); 
+                            })
+                            .catch(err => console.error(err));
                         };
                         
                         //Cria o botão de confirmar presença

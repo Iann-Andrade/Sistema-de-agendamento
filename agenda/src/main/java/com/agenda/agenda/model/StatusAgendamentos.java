@@ -1,7 +1,7 @@
 package com.agenda.agenda.model;
     
 
-
+//Model, cria uma lista com valores pré definidos em formato de string
     public enum StatusAgendamentos{
 
         PENDENTE("Pendente", false),
