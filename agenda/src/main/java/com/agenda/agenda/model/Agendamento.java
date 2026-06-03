@@ -3,13 +3,10 @@ package com.agenda.agenda.model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.annotation.Generated;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "agendamento")
 public class Agendamento {  
     
     @Id
@@ -20,7 +17,8 @@ public class Agendamento {
     private String data;
     private String hora;
     private String descricao;
-    private StatusAgendamentos status;
+    @Enumerated(EnumType.STRING)
+    private StatusAgendamentos statusDescricao;
 
 
 
@@ -64,14 +62,13 @@ public class Agendamento {
         this.descricao = descricao;
     }
 
-    public StatusAgendamentos getStatus(){
-        return status;
+    public StatusAgendamentos getStatusDescricao(){
+        return statusDescricao;
     }
 
-    public void setStatus(StatusAgendamentos status){
-        this.status = status;
-    };
-
+    public void setStatusDescricao(StatusAgendamentos statusDescricao){
+        this.statusDescricao = statusDescricao;
+    }
 }
 
     

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.agenda.agenda.repository.AgendamentoRepository;
-import com.agenda.agenda.model.AgendaEnity;
 import com.agenda.agenda.model.Agendamento;
 import com.agenda.agenda.service.AgendamentoService;
 

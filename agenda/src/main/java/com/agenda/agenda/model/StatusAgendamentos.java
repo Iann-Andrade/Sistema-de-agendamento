@@ -1,4 +1,7 @@
 package com.agenda.agenda.model;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
     
 
 //Model, cria uma lista com valores pré definidos em formato de string
@@ -11,17 +14,18 @@ package com.agenda.agenda.model;
         CANCELADO("Cancelado", false),
         NAO_COMPARECEU("Não compareceu", false);
 
-        private String descricao;
+        private String statusDescricao;
         private boolean ativo;
 
 
-        StatusAgendamentos(String descricao, boolean ativo){
-            this.descricao = descricao;
+        StatusAgendamentos(String statusDescricao, boolean ativo){
+            this.statusDescricao = statusDescricao;
             this.ativo = ativo;
         }
 
-        public String getDescricao() {
-            return descricao;
+        @JsonValue
+        public String getStatusDescricao() {
+            return statusDescricao;
         }
         
         public boolean isAtivo(){

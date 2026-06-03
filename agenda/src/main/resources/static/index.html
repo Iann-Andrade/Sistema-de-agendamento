@@ -4,15 +4,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
+        <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.css" rel="stylesheet">
         <title>Agendamento</title>
     </head>
     <body>
 
-        <header> 
-            <h1>Agenda de serviços</h1>
-        </header>
+        <aside class="sidebar"> 
+            <img src="" alt="logotipo" >
+
+            <nav>
+                <a href="#inicio">Home</a>
+                <a href="#agendamentos">Meus agendamentos</a>
+                <a href="#contatos">Contatos</a>
+                <a href="#portifolio">Portifólio</a>
+            </nav>
+
+            <button>Sair</button>
+
+        </aside>
         
         <main>
+
+            <h1>Agenda de serviços</h1>
+
+            <div id="calendar">
+
+            </div>
+
             <div id="formulario">
 
                 <input type="text" id="nomeCliente" placeholder="Nome"><br><br>
@@ -40,6 +58,17 @@
                     window.location.href = "login.html"
                 }
 
+                //Inicia Calendário para agendamento
+                document.addEventListener('DOMContentLoaded', function() {
+                const calendarEl = document.getElementById('calendar');
+                const calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    locale: 'pt-br' 
+                });
+                calendar.render();
+                });
+
+                //Criar agendamento
                 function criarAgendamento(){
                     const agendamento = {
                         nomeCliente: document.getElementById("nomeCliente").value,
@@ -53,7 +82,7 @@
                     
                 fetch("http://localhost:8080/agendamentos",{
                     method: "POST",
-                    headers: {
+                    asides: {
                         "Content-Type": "application/json"
                     },
 
@@ -84,7 +113,7 @@
                     data.forEach(a => {
 
                         //Cria botão e adiciona a function
-                                                const excluirAgendamento = document.createElement("button");
+                        const excluirAgendamento = document.createElement("button");
                         excluirAgendamento.innerText = "Excluir";
                         excluirAgendamento.type = "button";
 
@@ -94,7 +123,7 @@
 
                             fetch(`http://localhost:8080/agendamentos/${a.id}`, {
                                 method: "DELETE",
-                                headers: {
+                                asides: {
                                     "Content-Type": "application/json"
                                 }
                             })
@@ -114,7 +143,7 @@
                         //Função para atualizar status do agendamento
                         confirmar.onclick = function(){
                         fetch (`http://localhost:8080/agendamentos/confirmar/${a.id}`, {
-                            method: "POST"
+                            method: "PUT"
                         })
                         .then(response =>{
                             if(response.ok){
@@ -126,7 +155,17 @@
                         //Cria um elemnto de DIV e pucha o excluirAgendamento
                         const item = document.createElement("div");
                         item.id = a.id;
-                        item.innerText = a.nomeCliente + " - " + a.data + " " + a.hora + " - " + a.descricao + " - " + a.status;
+
+                        const texto = document.createElement("p");
+
+                        texto.innerText =
+                            a.nomeCliente + " - " +
+                            a.data + " " +
+                            a.hora + " - " +
+                            a.descricao + " - " +
+                            a.statusDescricao;
+
+                        item.appendChild(texto);
                         item.appendChild(excluirAgendamento);
                         item.appendChild(confirmar);
 
@@ -144,11 +183,10 @@
                         }
                     )});
                 };
-            
-            
-            console.log("agora estou aqui")
             listar();
 
             </script>
+            <!--Biblioteca do Calendário-->
+            <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
     </body>
     </html>

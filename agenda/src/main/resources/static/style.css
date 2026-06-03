@@ -1,8 +1,24 @@
-body{
+body {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #a1a4aa;
+    color: white;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
+    gap: 50px;
 }
+
+.sidebar nav{
+    display: grid;
+    gap: 10px;
+}
+
 
 
 /*Personalizar o imput*/

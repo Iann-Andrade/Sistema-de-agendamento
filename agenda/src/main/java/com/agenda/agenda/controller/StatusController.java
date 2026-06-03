@@ -45,9 +45,9 @@ public class StatusController {
         return ResponseEntity.ok("Horário cancelado com sucesso!");*/
 
         @DeleteMapping("/{id}")
-        public void cancelar(@PathVariable Integer id){
+        public String cancelar(@PathVariable Integer id){
             System.out.println("Cancelar FOI CHAMADO");
-            service.cancelar(id);
+            return service.cancelar(id);
         };
 
     };
