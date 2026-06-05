@@ -31,16 +31,11 @@
 
             </div>
 
-            <div id="formulario">
-
-                <input type="text" id="nomeCliente" placeholder="Nome"><br><br>
-                <input type="date" id="data" placeholder="Data">
-                <input type="time" id="hora" placeholder="Hora"><br><br>
-                <input type="text" id="descricao" placeholder="Descrição"><br><br>
-                
-                <button onclick="criarAgendamento()">Criar</button>
-                
+            <!--lista de horários disponíiveis-->
+            <div id="lista-horarios">
+                <div id="horarios"></div>
             </div>
+            <button onclick="criarAgendamento()">Confirmar Horário</button>
 
                 <h2>Lista:</h2>
                 <div id="div-agendamentos">
@@ -57,32 +52,99 @@
                 if (!localStorage.getItem("token")){
                     window.location.href = "login.html"
                 }
+                
+                //variavel para o agendamento
+                let dataSelecionada = "";
+                let horarioSelecionado = "";
 
                 //Inicia Calendário para agendamento
                 document.addEventListener('DOMContentLoaded', function() {
                 const calendarEl = document.getElementById('calendar');
+
                 const calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
-                    locale: 'pt-br' 
+                    locale: 'pt-br',
+
+                    //Capturar informações do click
+                    dateClick: function(info){
+                        
+                        dataSelecionada = info.dateStr;
+                        console.log(info.dateStr);
+                    }
+
                 });
                 calendar.render();
                 });
 
+                //Criar função de verificar horários disponíveis
+                function buscarHorariosDisponiveis(data){
+                    const response = await(
+                        `http://localhost:8080/horarios-disponiveis?data=${data}`
+                    );
+
+                    return await response.json();
+                }
+
+                //Cria lista de horários disponíveis
+
+                function renderizarHorarios(horarios){
+                const horarios = [
+                    "08:00",
+                    "08:30",
+                    "09:00",
+                    "09:30",
+                    "10:00",
+                    "10:30",
+                    "11:00",
+                    "11:30",
+                    "12:00",
+                    "12:30",
+                    "13:00",
+                    "13:30",
+                    "14:00",
+                    "14:30",
+                    "15:00",
+                    "15:30",
+                    "16:00",
+                    "16:30",
+                    "17:00",
+                    "17:30",
+                    "18:00"
+                ];
+
+                const container = document.getElementById("horarios");
+                    
+                horarios.forEach(horario =>{
+
+                    const bttn = document.createElement("button");
+                    bttn.textContent = horario;
+
+                    bttn.addEventListener("click", () =>{
+
+                        horarioSelecionado = horario;
+
+                        console.log(horarioSelecionado);
+                    });
+
+                    container.appendChild(bttn);
+                    
+                 })
+                }
+
+               
+
                 //Criar agendamento
                 function criarAgendamento(){
                     const agendamento = {
-                        nomeCliente: document.getElementById("nomeCliente").value,
-                        data: document.getElementById("data").value,
-                        hora: document.getElementById("hora").value,
-                        descricao: document.getElementById("descricao").value,
-                        
+                        data: dataSelecionada,
+                        hora: horarioSelecionado,
                     };
                     
                     
                     
                 fetch("http://localhost:8080/agendamentos",{
                     method: "POST",
-                    asides: {
+                    headers: {
                         "Content-Type": "application/json"
                     },
 

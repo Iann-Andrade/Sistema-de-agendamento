@@ -12,6 +12,8 @@ import jakarta.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class AgendamentoService {
@@ -22,6 +24,34 @@ public class AgendamentoService {
      public List<Agendamento> listar() {
          return repository.findAll();
      }
+
+     //listar horarios disponíveis
+     @GetMapping("/horarios-disponiveis")
+     public List<String> horariosDisponiveis (@RequestParam String data) {
+        List<String> horariosPadrao = List.of(
+            "08:00",
+            "08:30",
+            "09:00",
+            "09:30",
+            "10:00",
+            "10:30",
+            "11:00",
+            "11:30",
+            "12:00",
+            "12:30",
+            "13:00",
+            "13:30",
+            "14:00",
+            "14:30",
+            "15:00",
+            "15:30",
+            "16:00",
+            "16:30",
+            "17:00",
+            "17:30",
+            "18:00"
+        );
+     };
 
      public Agendamento criar(Agendamento agendamento){
 

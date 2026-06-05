@@ -28,7 +28,8 @@ public class AgendamentoController {
     public Agendamento criar(@RequestBody Agendamento agendamento){
         System.out.println("CRIAR FOI CHAMADO");
         return service.criar(agendamento);
-    }
+    };
+
+    //testando função de lista de agendamentos
     
-   
 }
