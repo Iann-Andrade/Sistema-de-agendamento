@@ -1,7 +1,8 @@
 package com.agenda.agenda.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.time.LocalDate;
 
 import com.agenda.agenda.model.Agendamento;
 import com.agenda.agenda.model.StatusAgendamentos;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @Service
 public class AgendamentoService {
     
@@ -26,8 +28,7 @@ public class AgendamentoService {
      }
 
      //listar horarios disponíveis
-     @GetMapping("/horarios-disponiveis")
-     public List<String> horariosDisponiveis (@RequestParam String data) {
+     public List<String> buscarHorariosDisponiveis(@RequestParam LocalDate data) {
         List<String> horariosPadrao = List.of(
             "08:00",
             "08:30",
@@ -51,7 +52,36 @@ public class AgendamentoService {
             "17:30",
             "18:00"
         );
+
+        System.out.println("Entrou no service");
+
+
+        List<Agendamento> ocupados = repository.findByData(data);
+
+        System.out.println("Encontrou " +
+        ocupados.size() +
+        " agendamentos");
+
+        List<String> horasOcupadas =    
+                    ocupados.stream()  
+                        .map(Agendamento::getHora)
+                        .toList();
+
+        List<String> horariosDisponiveis =
+            new ArrayList<>();
+
+            for(String horario : horariosPadrao){
+                if(!horasOcupadas.contains(horario)){
+                    horariosDisponiveis.add(horario);
+                } 
+            }
+
+            System.out.println(horariosDisponiveis);
+            
+            return horariosDisponiveis;
      };
+
+
 
      public Agendamento criar(Agendamento agendamento){
 

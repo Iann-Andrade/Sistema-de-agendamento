@@ -1,5 +1,6 @@
 package com.agenda.agenda.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class AgendamentoController {
     
     @Autowired
     private AgendamentoService service;
+    @Autowired   
     private AgendamentoRepository repository;
 
     @GetMapping
@@ -31,5 +33,14 @@ public class AgendamentoController {
     };
 
     //testando função de lista de agendamentos
+    @GetMapping("/horarios-disponiveis")
+        public List<String> horariosDisponiveis(@RequestParam LocalDate data){
+
+            System.out.println("DATA RECEBIDA: " + data);
+
+            return service.buscarHorariosDisponiveis(data);
+        };
+    
+
     
 }

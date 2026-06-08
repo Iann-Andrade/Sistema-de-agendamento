@@ -41,14 +41,16 @@
                 <div id="div-agendamentos">
                     <ul id="lista"></ul>
                 </div>
-        </main>
-
-        <footer>
-
-        </footer>
+            </main>
             
+            <footer>
+                
+            </footer>
+            
+            <!--Biblioteca do Calendário-->
+            <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
             <script>
-
+                
                 if (!localStorage.getItem("token")){
                     window.location.href = "login.html"
                 }
@@ -66,70 +68,68 @@
                     locale: 'pt-br',
 
                     //Capturar informações do click
-                    dateClick: function(info){
+                    dateClick: async function(info){
                         
                         dataSelecionada = info.dateStr;
-                        console.log(info.dateStr);
-                    }
 
+                        const horarios = 
+                            await buscarHorariosDisponiveis(
+                                dataSelecionada
+                            );
+
+                        renderizarHorarios(horarios);
+                        console.log(info.dateStr);
+                        console.log(horarios);
+                    }
                 });
+
+                
                 calendar.render();
+                
+                console.log(horarios);
+            
                 });
 
                 //Criar função de verificar horários disponíveis
-                function buscarHorariosDisponiveis(data){
-                    const response = await(
-                        `http://localhost:8080/horarios-disponiveis?data=${data}`
+                async function buscarHorariosDisponiveis(data){
+                     const response = await fetch(
+                        `http://localhost:8080/agendamentos/horarios-disponiveis?data=${data}`,{
+
+                        method: "GET"}
                     );
 
-                    return await response.json();
-                }
+                        return await response.json();
 
-                //Cria lista de horários disponíveis
+                    };
 
-                function renderizarHorarios(horarios){
-                const horarios = [
-                    "08:00",
-                    "08:30",
-                    "09:00",
-                    "09:30",
-                    "10:00",
-                    "10:30",
-                    "11:00",
-                    "11:30",
-                    "12:00",
-                    "12:30",
-                    "13:00",
-                    "13:30",
-                    "14:00",
-                    "14:30",
-                    "15:00",
-                    "15:30",
-                    "16:00",
-                    "16:30",
-                    "17:00",
-                    "17:30",
-                    "18:00"
-                ];
 
-                const container = document.getElementById("horarios");
-                    
-                horarios.forEach(horario =>{
+                    function renderizarHorarios(horarios){
 
-                    const bttn = document.createElement("button");
-                    bttn.textContent = horario;
+                       const container =
+                            document.getElementById("horarios");
 
-                    bttn.addEventListener("click", () =>{
+                        container.innerHTML = "";
 
-                        horarioSelecionado = horario;
+                        horarios.forEach(horario => {
 
-                        console.log(horarioSelecionado);
-                    });
+                            const btn =
+                                document.createElement("button");
 
-                    container.appendChild(bttn);
-                    
-                 })
-                }
+                            btn.textContent = horario;
+
+                            btn.addEventListener("click", () => {
+
+                                horarioSelecionado = horario;
+
+                                console.log(horarioSelecionado);
+
+                            });
+
+                            container.appendChild(btn);
+
+                        });
+
+                    }
 
                
 
@@ -248,7 +248,5 @@
             listar();
 
             </script>
-            <!--Biblioteca do Calendário-->
-            <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
     </body>
     </html>

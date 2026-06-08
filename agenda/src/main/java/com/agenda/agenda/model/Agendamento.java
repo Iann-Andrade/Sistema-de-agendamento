@@ -1,5 +1,7 @@
 package com.agenda.agenda.model;
 
+import java.time.LocalDate;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.annotation.Generated;
@@ -14,7 +16,7 @@ public class Agendamento {
     private Integer id;
 
     private String nomeCliente;
-    private String data;
+    private LocalDate data;
     private String hora;
     private String descricao;
     @Enumerated(EnumType.STRING)
@@ -38,11 +40,11 @@ public class Agendamento {
         this.nomeCliente = nomeCliente;
     }
 
-    public String getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
