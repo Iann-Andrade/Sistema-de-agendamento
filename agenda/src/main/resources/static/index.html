@@ -82,15 +82,12 @@
                         console.log(horarios);
                     }
                 });
-
                 
-                calendar.render();
-                
-                console.log(horarios);
-            
+                    calendar.render();
+                        
                 });
 
-                //Criar função de verificar horários disponíveis
+                //Cria função de verificar horários disponíveis
                 async function buscarHorariosDisponiveis(data){
                      const response = await fetch(
                         `http://localhost:8080/agendamentos/horarios-disponiveis?data=${data}`,{
@@ -116,19 +113,33 @@
                                 document.createElement("button");
 
                             btn.textContent = horario;
-
+                            
+                            
                             btn.addEventListener("click", () => {
-
+                                
                                 horarioSelecionado = horario;
 
                                 console.log(horarioSelecionado);
-
+                                
                             });
 
+                            container.style.display = "block";
+                            
                             container.appendChild(btn);
+                            
+                        });
+                        //Botão de fechar janela de horários disponíveis
+                        const fecharLista = 
+                            document.createElement("button");
 
+                        fecharLista.textContent = "Fechar lista"
+
+                        fecharLista.addEventListener("click", () =>{
+                            document.getElementById("horarios").style.display = "none";
                         });
 
+                        container.appendChild(fecharLista);
+                        
                     }
 
                

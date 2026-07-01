@@ -1,62 +1,146 @@
+/* Configuração básica para zerar margens */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 🔴 O CORPO DO SITE VIRA O GRID PRINCIPAL */
 body {
-    display: flex;
+    background-color: #f4f7f6;
+    display: grid;
+    /* Define que a sidebar tem 260px fixos e o conteúdo ocupa o resto (1fr) */
+    grid-template-columns: 260px 1fr;
     min-height: 100vh;
 }
 
+/* --- ESTRUTURA DA BARRA LATERAL --- */
 .sidebar {
-    width: 220px;
-    background-color: #a1a4aa;
-    color: white;
-    padding: 20px;
+    background-color: #1e293b; /* Azul escuro profissional */
+    color: #fff;
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    align-items: start;
-    gap: 50px;
+    gap: 2.5rem;
+    border-right: 1px solid #334155;
 }
 
-.sidebar nav{
-    display: grid;
-    gap: 10px;
+.sidebar-logo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #38bdf8; /* Detalhe em azul claro */
 }
 
-/*Personalizar a lista dde horários*/
-#horarios{
-    display: grid;
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-/*Personalizar o imput*/
-#formulario{
-    background-color: rgb(121, 122, 122);
-    color: rgb(0, 62, 185);
-    padding: 20px;
-    width: 300px;
-    height: 180px;
-    align-content: center;
-    border-radius: 20px;
-    border: solid black 2px;
-    box-shadow: 2px 2px 5px rgb(0, 0, 0);
+.sidebar nav a {
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
-
-
-/*Personalizando a lista*/
-#div-agendamentos{
-    height: 300px;
-    width: 300px;
+/* Efeito de passar o mouse nos links da sidebar */
+.sidebar-nav a:hover {
+    background-color: #334155;
+    color: #fff;
 }
 
-
-ul{ 
-    display: grid;
-    border-radius: 20px;
-    list-style-type: none;
-    border: solid black 2px;
-    box-shadow: 2px 2px 5px rgb(0, 0, 0);
+/* Link que representa a página atual ativa */
+.sidebar-nav a.active {
+    background-color: #007bff;
+    color: #fff;
 }
 
-ul li{
-    gap: 0px;
-    margin: 0px;
-    height: 100px;
-    width: 100px;
+/* --- ÁREA DO CONTEÚDO PRINCIPAL --- */
+.conteudo-principal {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto; /* Permite scroll se a tela for pequena */
+}
+
+header {
+    padding: 2.5rem 3rem 1rem 3rem;
+    color: #1e293b;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza o card na horizontal */
+    align-items: center;     /* Centraliza o card na vertical */
+    padding: 0 3rem 3rem 3rem;
+}
+
+/* --- CONTAINER DO FORMULÁRIO (CARD) --- */
+#container-cadastro {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra mais suave */
+    width: 100%;
+    max-width: 420px;
+}
+
+#meuFormulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+/* inputs elegantes */
+input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #334155;
+    background-color: #f8fafc;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+input:focus {
+    background-color: #fff;
+    border-color: #007bff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+}
+
+/* Botão moderno */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+button:active {
+    transform: scale(0.98);
 }

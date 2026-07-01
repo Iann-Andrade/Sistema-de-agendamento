@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page - Login</title>
+    <script src="loginJs.js"></script>
+    <link rel="stylesheet" href="loginStyle.css">
 </head>
 <body>
 
@@ -15,57 +17,17 @@
 
     <div id="container-login">
         <!--<input type="text" id="nome" placeholder="Nome:">-->
-        <input type="email" id="email" placeholder="E-mail:">
-        <input type="password" id="senha" placeholder="Senha:">
+        <input type="email" id="emailUsuario" placeholder="E-mail:">
+        <input type="password" id="senhaUsuario" placeholder="Senha:">
 
-        <button onclick="login()">Logar</button>
-
+        <button type="button" onclick="logar()">Logar</button>
     </div>
+
 
 </main>
 
 <footer>
-
 </footer>
 
-<!--JS-->
-<script>
-
-    function login(){
-
-        const email = document.getElementById("email").value;
-        const senha = document.getElementById("senha").value;
-
-        if(!email || !senha){
-            alert("Preencha todos os campos");
-            return;
-        }
-
-        fetch("http://localhost:8080/auth/login", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        email: email,
-        senha: senha
-    })
-})
-    .then(res => {
-        if (!res.ok) {
-            throw new Error("Login inválido");
-        }
-        return res.json();
-    })
-    .then(data =>{
-        localStorage.setItem("token", data.token);
-        window.location.href = "index.html";
-    })
-    .catch(() => {
-        alert("Email ou senha incorretos");
-    });
-}
-
-</script>
 </body>
 </html>

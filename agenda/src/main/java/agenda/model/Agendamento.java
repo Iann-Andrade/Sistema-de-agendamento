@@ -1,4 +1,4 @@
-package com.agenda.agenda.model;
+package agenda.model;
 
 import java.time.LocalDate;
 
@@ -19,9 +19,13 @@ public class Agendamento {
     private LocalDate data;
     private String hora;
     private String descricao;
+
     @Enumerated(EnumType.STRING)
     private StatusAgendamentos statusDescricao;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
 
     public int getId() {
@@ -71,6 +75,16 @@ public class Agendamento {
     public void setStatusDescricao(StatusAgendamentos statusDescricao){
         this.statusDescricao = statusDescricao;
     }
+
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }
 
     

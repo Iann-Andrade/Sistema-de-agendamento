@@ -1,4 +1,4 @@
-package com.agenda.agenda.controller;
+package agenda.controller;
 
 import java.util.ArrayList;
 
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.agenda.agenda.model.Agendamento;
-import com.agenda.agenda.model.StatusAgendamentos;
-import com.agenda.agenda.repository.AgendamentoRepository;
-import com.agenda.agenda.service.AgendamentoService;
+import agenda.model.Agendamento;
+import agenda.model.StatusAgendamentos;
+import agenda.repository.AgendamentoRepository;
+import agenda.service.AgendamentoService;
 
 @RestController
 @RequestMapping("/agendamentos")

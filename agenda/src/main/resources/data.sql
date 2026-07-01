@@ -1,1 +1,1 @@
-INSERT INTO usuario (email, senha) VALUES ('admin', '123');
+/*INSERT INTO usuario (email, senha) VALUES ('admin', '123')*/

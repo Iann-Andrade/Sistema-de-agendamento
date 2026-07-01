@@ -1,4 +1,4 @@
-package com.agenda.agenda.model;
+package agenda.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
