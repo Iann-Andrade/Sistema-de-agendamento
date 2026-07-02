@@ -1,26 +1,17 @@
 package agenda.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.yaml.snakeyaml.events.Event.ID;
 
 import agenda.model.Agendamento;
 import agenda.model.StatusAgendamentos;
-import agenda.model.Usuario;
 import agenda.repository.AgendamentoRepository;
-import agenda.repository.UsuarioRepository;
 
 
 @RestController
@@ -29,11 +20,7 @@ public class AgendamentoService {
     
     @Autowired
     private AgendamentoRepository repository;
-
-    private UsuarioRepository usuarioRepository;
     
-    @ManyToOne 
-    private Usuario usuario;
 
      public List<Agendamento> listar() {
          return repository.findAll();
@@ -98,23 +85,12 @@ public class AgendamentoService {
      //Cria o agendamento
      public Agendamento criar(Agendamento agendamento){
 
+        Integer idUsuario = agendamento.getUsuarioId();
+    
+    List<Agendamento> lista = repository.findAll();
 
-    System.out.println("Agendamento recebido: " + agendamento);
 
-    System.out.println("Usuario recebido: " + agendamento.getUsuario());
-
-        List<Agendamento> lista = repository.findAll();
-
-        if(agendamento.getUsuario()== null){
-            throw new RuntimeException("Usuário não identificado");            
-        };
-
-        Integer usuarioId = agendamento.getUsuario().getId();
-
-            Usuario usuario = usuarioRepository.findById(usuarioId)
-                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-            agendamento.setUsuario(usuario);
+        System.out.println("aqui está o id do usuario "+ idUsuario);
 
             for(Agendamento a : lista){
                 if (a.getData().equals(agendamento.getData()) &&
@@ -123,8 +99,6 @@ public class AgendamentoService {
                     throw new RuntimeException("Horário ocupado!");
                 }
             }
-            
-        System.out.println(usuarioId);
         agendamento.setStatusDescricao(StatusAgendamentos.PENDENTE);
         System.out.println(agendamento.getStatusDescricao());
 

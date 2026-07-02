@@ -14,7 +14,6 @@ public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String nomeCliente;
     private LocalDate data;
     private String hora;
@@ -26,6 +25,13 @@ public class Agendamento {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    public Integer getUsuarioId(){
+        if(this.usuario != null){
+            return this.usuario.getId();
+        }
+            return null;
+    }
 
 
     public int getId() {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import agenda.model.Agendamento;
+import agenda.model.Usuario;
 import agenda.repository.AgendamentoRepository;
 import agenda.service.AgendamentoService;
 
@@ -20,6 +21,8 @@ public class AgendamentoController {
     private AgendamentoService service;
     @Autowired   
     private AgendamentoRepository repository;
+    
+    private Usuario usuario;
 
     //Lista os agendamentos criados, separar essa função apenas para a página do ADM
     @GetMapping

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AgendaApplication",
+            "request": "launch",
+            "mainClass": "agenda.AgendaApplication",
+            "projectName": "agenda"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

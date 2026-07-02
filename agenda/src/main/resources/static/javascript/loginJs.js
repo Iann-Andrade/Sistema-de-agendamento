@@ -31,7 +31,7 @@ function logar(){
             if(Response = usuario){
                 console.log("ficou pelo if");
 
-                window.location.href = `http://localhost:8080/`;
+                window.location.href = "http://localhost:8080/html/index.html";
             };
             console.log("passou pelo if");
 

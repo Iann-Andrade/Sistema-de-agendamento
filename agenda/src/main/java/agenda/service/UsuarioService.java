@@ -20,6 +20,7 @@ public class UsuarioService {
     
     @Autowired
     private UsuarioRepository usuarioRepository;
+
     private Usuario usuario;
 
    

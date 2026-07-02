@@ -30,7 +30,7 @@ function cadastrarUsuario(){
 
     .then(retornoCadastro => {
         console.log("Sucesso!", retornoCadastro);
-        window.location.href = "http://localhost:8080/login.html";
+        window.location.href = "http://localhost:8080/html/login.html";
      });
 
 }
