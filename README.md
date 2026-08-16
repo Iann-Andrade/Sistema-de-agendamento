@@ -1,23 +1,12 @@
 # 📅 Sistema de Agendamento Online
 
-Aplicação web desenvolvida para gerenciamento de agendamentos, permitindo que clientes visualizem horários disponíveis e realizem reservas de forma simples e organizada.
+Sistema web para gerenciamento de agendamentos,
+com autenticação de usuários e controle de horários.
 
 ## 🚀 Tecnologias Utilizadas
 
-### Backend
-- Java
-- Spring Boot
-- Spring Data JPA
-- Hibernate
-- Maven
-
-### Banco de Dados
-- MySQL
-
-### Frontend
-- HTML5
-- CSS3
-- JavaScript
+Java • Spring Boot • Spring Security
+JWT • JPA • MySQL • JavaScript • HTML • CSS
 
 ### Controle de Versão
 - Git
@@ -25,22 +14,22 @@ Aplicação web desenvolvida para gerenciamento de agendamentos, permitindo que 
 
 ---
 
-## 📋 Funcionalidades
 
-- Cadastro de agendamentos
-- Consulta de horários disponíveis
-- Bloqueio de horários já reservados
-- Comunicação entre Frontend e Backend através de API REST
-- Persistência dos dados em banco MySQL
-- Atualização dinâmica da agenda com JavaScript
+
+##✨ Funcionalidades
+
+🔐 Autenticação com JWT
+👤 Cadastro e login
+📅 Criação de agendamentos
+🕐 Horários disponíveis
+❌ Cancelamento
+📆 Calendário interativo
+🔍 Filtro de agendamentos por usuário
 
 ### Funcionalidades em Desenvolvimento
 
-- Sistema de login e autenticação de usuários
-- Histórico de agendamentos por usuário
-- Cancelamento de agendamentos
 - Painel administrativo
-- Recuperação de senha
+- Integração com o Goggle Agendas
 
 ---
 
@@ -135,11 +124,6 @@ Exemplo:
 GET /agendamentos
 ```
 
-### Buscar Agendamentos por Data
-
-```http
-GET /agendamentos/data/{data}
-```
 
 ---
 
