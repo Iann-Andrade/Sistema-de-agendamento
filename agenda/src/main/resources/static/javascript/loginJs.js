@@ -15,26 +15,23 @@ function logar(){
     fetch("http://localhost:8080/agendamentos/login",{
             method: "POST",
             headers: {
-                "Content-Type":"Application/json",
+                "Content-Type":"Application/json"
             },
             body: JSON.stringify(usuario)
         })
-        .then(Response => {   
+        .then(response => {
+            if(!response.ok){
+                throw new Error("Login inválido." + response.status);
+            }
 
-            return Response.json();
-
+            return response.text();
         })
-        .then(usuario => {
+        .then(token => {
 
-            console.log("antes do if");
+            localStorage.setItem("token", token);
 
-            if(Response = usuario){
-                console.log("ficou pelo if");
-
-                window.location.href = "http://localhost:8080/html/index.html";
-            };
-            console.log("passou pelo if");
-
+            window.location.href = "http://localhost:8080/html/index.html";
+            
         })
         
  }

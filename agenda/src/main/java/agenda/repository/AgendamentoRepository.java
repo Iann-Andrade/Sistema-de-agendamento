@@ -11,6 +11,9 @@ import java.util.*;
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Integer> {
 
     List<Agendamento>findByData(LocalDate data);
-    
+
+    List<Agendamento> findByUsuario_Id(Integer usuarioId);
 }
+
+
 

@@ -31,3 +31,21 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# Java / Maven
+target/
+*.class
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Configurações locais
+.env
+application-local.properties
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

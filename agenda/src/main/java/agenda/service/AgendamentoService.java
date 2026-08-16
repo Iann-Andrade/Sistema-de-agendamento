@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import agenda.model.Agendamento;
 import agenda.model.StatusAgendamentos;
+import agenda.model.Usuario;
 import agenda.repository.AgendamentoRepository;
+import agenda.repository.UsuarioRepository;
+import agenda.security.JwtAuthenticationFilter;
 
 
 @RestController
@@ -20,9 +23,15 @@ public class AgendamentoService {
     
     @Autowired
     private AgendamentoRepository repository;
+    @Autowired
+    private JwtAuthenticationFilter authenticator;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     
 
      public List<Agendamento> listar() {
+        System.out.println("Criando lista que percorre as datas");
          return repository.findAll();
      }
 
@@ -83,14 +92,17 @@ public class AgendamentoService {
 
 
      //Cria o agendamento
-     public Agendamento criar(Agendamento agendamento){
+     public Agendamento criar(Agendamento agendamento, Integer usuarioId){
 
-        Integer idUsuario = agendamento.getUsuarioId();
+       // Integer idUsuario = agendamento.getUsuarioId();
+
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
     
-    List<Agendamento> lista = repository.findAll();
+        List<Agendamento> lista = repository.findAll();
 
 
-        System.out.println("aqui está o id do usuario "+ idUsuario);
+        System.out.println("aqui está o id do usuario "+ usuarioId);
 
             for(Agendamento a : lista){
                 if (a.getData().equals(agendamento.getData()) &&
@@ -99,10 +111,45 @@ public class AgendamentoService {
                     throw new RuntimeException("Horário ocupado!");
                 }
             }
+
+        agendamento.setUsuario(usuario);
         agendamento.setStatusDescricao(StatusAgendamentos.PENDENTE);
+        
         System.out.println(agendamento.getStatusDescricao());
 
         return repository.save(agendamento);
+    }
+
+    //Buscar meus agendamentos
+    public List<Agendamento> buscarMeusAgendamentos(Integer usuarioId){
+
+        List<Agendamento> meusAgendamentos = repository.findByUsuario_Id(usuarioId);
+
+        System.out.println("Está no service do retorno de meus agendamentos" + meusAgendamentos.size());
+        return meusAgendamentos;
+
+    }
+
+
+    //Criar lista Meus Agendamentos ainda não está em uso, rever
+    public List<Agendamento> listarMeusAgendamentos(Integer usuarioId) {
+
+        List<Agendamento> meusAgendamentos = repository.findByUsuario_Id(usuarioId);
+
+        return meusAgendamentos;
+    }
+    
+    //Cria função de candelar Meu agendamento
+    public String cancelarMeuAgendamento(Integer id){
+
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Agendamento não encontrado");
+          }
+          
+          repository.deleteById(id);
+          System.out.println("Servie: Cancelar Meus Agendamentos");
+
+        return "Cancelamento do agendamento realizado com sucesso!";
     }
     
     //Confirma o agendamento
@@ -133,7 +180,7 @@ public class AgendamentoService {
               }
               
               repository.deleteById(id);
-              return ("Agendamento cancelado com sucesso!");
+              return cancelar(id);
             };
 
     //Cria liste dos meus agendamentos do usuário

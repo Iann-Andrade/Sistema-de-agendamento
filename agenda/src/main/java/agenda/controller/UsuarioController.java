@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import agenda.model.Usuario;
 import agenda.repository.UsuarioRepository;
+import agenda.security.JwtService;
 import agenda.service.UsuarioService;
+import io.jsonwebtoken.Jwts;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -25,6 +27,8 @@ public class UsuarioController {
     private UsuarioService service;
     @Autowired
     private UsuarioRepository repository;
+    @Autowired
+    private JwtService jwtService;
 
     
     @PostMapping("/cadastrar-usuario")
@@ -32,18 +36,25 @@ public class UsuarioController {
         return service.cadastrar(usuario);
     }
 
+
     @PostMapping("/login")
     public ResponseEntity<?> login (@RequestBody Usuario usuario){
         System.out.println("vamos ");
 
         Usuario usuarioLogado = service.login(usuario);
 
+
+
         System.out.println("Usuario logado"+usuarioLogado);
 
+        
         if (usuarioLogado != null) {
-
+            
             System.out.println("Aqui é o retorno do usuasio logado: " + usuario);
-            return ResponseEntity.ok(usuarioLogado);
+            
+            String token = jwtService.gerarToken(usuarioLogado);
+
+            return ResponseEntity.ok(token);
         }
 
         System.out.println("chegou no retorno negativo de login");

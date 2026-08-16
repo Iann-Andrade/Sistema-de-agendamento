@@ -1,0 +1,166 @@
+/* ============================================================
+   THEME — Design system compartilhado (linha Notion)
+   Importado por todas as páginas antes do CSS específico.
+   ============================================================ */
+
+:root{
+  /* Superfícies */
+  --bg: #ffffff;
+  --bg-sidebar: #fbfbfa;
+  --bg-hover: #efefed;
+  --bg-subtle: #f7f7f5;
+
+  /* Bordas */
+  --border: #e9e9e7;
+  --border-strong: #d3d1cb;
+
+  /* Texto */
+  --text: #37352f;
+  --text-secondary: #787774;
+  --text-faint: #9b9a97;
+
+  /* Acento (usado com moderação, como o Notion faz) */
+  --accent: #2383e2;
+  --accent-hover: #0b6fcc;
+  --accent-soft: #e7f3fe;
+
+  /* Estados */
+  --danger: #eb5757;
+  --danger-hover: #d64545;
+  --success: #2f9e44;
+
+  /* Forma */
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+
+  /* Sombra sutil, característica do Notion */
+  --shadow-sm: 0 1px 2px rgba(15, 15, 15, 0.08);
+  --shadow: 0 1px 3px rgba(15, 15, 15, 0.08), 0 2px 6px rgba(15, 15, 15, 0.04);
+
+  /* Tipografia */
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+          Helvetica, Arial, sans-serif;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+html, body{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Tipografia base ---------- */
+h1, h2, h3{
+  margin: 0;
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+p{
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* ---------- Inputs (padrão para todas as páginas) ---------- */
+input{
+  width: 100%;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input::placeholder{
+  color: var(--text-faint);
+}
+
+input:hover{
+  border-color: var(--border-strong);
+}
+
+input:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ---------- Botões (padrão para todas as páginas) ---------- */
+button{
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
+}
+
+button:hover{
+  background: var(--accent-hover);
+}
+
+button:active{
+  transform: scale(0.98);
+}
+
+button:focus-visible,
+input:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Botão secundário/neutro — usar classe "btn-secundario" onde fizer sentido */
+button.btn-secundario{
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+button.btn-secundario:hover{
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+/* Botão destrutivo — usar classe "btn-perigo" (ex.: excluir) */
+button.btn-perigo{
+  background: var(--bg);
+  color: var(--danger);
+  border: 1px solid var(--border);
+}
+
+button.btn-perigo:hover{
+  background: #fdecec;
+  border-color: var(--danger);
+}
+
+/* ---------- Scrollbar discreta ---------- */
+::-webkit-scrollbar{
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background: var(--border-strong);
+  border-radius: var(--radius);
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-track{
+  background: transparent;
+}

@@ -1,146 +1,285 @@
-/* Configuração básica para zerar margens */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+/* style.css — Dashboard (index.html)
+   Requer theme.css carregado antes deste arquivo. */
 
-/* 🔴 O CORPO DO SITE VIRA O GRID PRINCIPAL */
-body {
-    background-color: #f4f7f6;
+   body{
     display: grid;
-    /* Define que a sidebar tem 260px fixos e o conteúdo ocupa o resto (1fr) */
     grid-template-columns: 260px 1fr;
     min-height: 100vh;
-}
-
-/* --- ESTRUTURA DA BARRA LATERAL --- */
-.sidebar {
-    background-color: #1e293b; /* Azul escuro profissional */
-    color: #fff;
-    padding: 2rem 1.5rem;
+  }
+  
+  /* --- BARRA LATERAL --- */
+  .sidebar{
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    padding: 24px 16px;
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
-    border-right: 1px solid #334155;
-}
-
-.sidebar-logo h2 {
-    font-size: 1.5rem;
+    gap: 28px;
+  }
+  
+  .sidebar img{
+    height: 28px;
+    width: auto;
+  }
+  
+  .sidebar-logo h2{
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #38bdf8; /* Detalhe em azul claro */
-}
-
-.sidebar nav {
+    color: var(--text);
+  }
+  
+  .sidebar nav{
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-}
-
-.sidebar nav a {
-    color: #94a3b8;
+    gap: 2px;
+  }
+  
+  .sidebar nav a{
+    color: var(--text-secondary);
     text-decoration: none;
-    padding: 12px 16px;
-    border-radius: 8px;
+    font-size: 14px;
     font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-/* Efeito de passar o mouse nos links da sidebar */
-.sidebar-nav a:hover {
-    background-color: #334155;
-    color: #fff;
-}
-
-/* Link que representa a página atual ativa */
-.sidebar-nav a.active {
-    background-color: #007bff;
-    color: #fff;
-}
-
-/* --- ÁREA DO CONTEÚDO PRINCIPAL --- */
-.conteudo-principal {
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  
+  .sidebar nav a:hover{
+    background: var(--bg-hover);
+    color: var(--text);
+  }
+  
+  .sidebar nav a.active{
+    background: var(--accent-soft);
+    color: var(--accent-hover);
+    font-weight: 600;
+  }
+  
+  /* Botão "Sair" no rodapé da sidebar */
+  .sidebar > button{
+    margin-top: auto;
+    background: var(--bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  
+  .sidebar > button:hover{
+    background: var(--bg-hover);
+    color: var(--text);
+  }
+  
+  /* --- ÁREA DE CONTEÚDO PRINCIPAL --- */
+  .conteudo-principal{
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow-y: auto; /* Permite scroll se a tela for pequena */
-}
-
-header {
-    padding: 2.5rem 3rem 1rem 3rem;
-    color: #1e293b;
-}
-
-header h1 {
-    font-size: 1.8rem;
+    overflow-y: auto;
+  }
+  
+  header{
+    padding: 32px 40px 8px;
+  }
+  
+  header h1{
+    font-size: 20px;
     font-weight: 600;
-}
-
-main {
+  }
+  
+  main{
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza o card na horizontal */
-    align-items: center;     /* Centraliza o card na vertical */
-    padding: 0 3rem 3rem 3rem;
-}
+    align-items: center;
+    gap: 20px;
+    padding: 24px 40px 40px;
+    width: 100%;
+  }
 
-/* --- CONTAINER DO FORMULÁRIO (CARD) --- */
-#container-cadastro {
+  #calendario-horarios{
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+    background-color: #f7f7f5;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: #646363 1px 1px 3px;
+  }
+  
+  #calendar{
+    /*flex: 1 1 60%;*/
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 400px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 16px;
+  }
+
+  #calendar,
+  #lista-horarios{
+    flex: 1;
+    padding: 20px;
+  }
+
+  #calendar h2{
+    flex: 0 0 100%;
+
+  }
+  
+
+  /* --- Horários disponíveis --- */
+  #lista-horarios{ 
+    flex: 1 1 260px;
+    max-width: 260px;
+  }
+
+  /*Botão de agendar horário*/
+  #btn-agendar{
+    display: none;
+  }
+
+  /*Lista Meus Agendamentos*/
+  .meus-agendamentos{
+    min-width: 400px;
+    min-height: 100px;
+    text-align: center;
+    background-color: #f7f7f5;
+    border: 1px solid var(--border);
+    box-shadow: #646363 1px 1px 3px;
+    border-radius: 10px;
+  }
+
+  .meus-agendamentos h2{
+    font-size: 24px;
+  }
+
+  #lista-meus-agendamentos li {
     background-color: #ffffff;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra mais suave */
+    border: solid 1px #e9e9e7;
+    border-radius: 10px;
+    width: 300px;
+    height: 35px;
+    display: flex;
+  }
+
+  #lista-meus-agendamentos p{
+    color: #37352f;
+    font-weight: 500;
+  }
+  
+  #horarios{
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  
+  #horarios button{
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-weight: 500;
+    padding: 8px 12px;
+  }
+  
+  #horarios button:hover{
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+  
+  /* --- Container de cadastro/formulário reaproveitado no index (se houver) --- */
+  #container-cadastro{
+    background: var(--bg);
+    padding: 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
     width: 100%;
     max-width: 420px;
-}
-
-#meuFormulario {
+  }
+  
+  #meuFormulario{
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
-}
-
-/* inputs elegantes */
-input {
+    gap: 12px;
+  }
+  
+  /* --- Lista de agendamentos --- */
+  #div-agendamentos{
     width: 100%;
-    padding: 14px 16px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    color: #334155;
-    background-color: #f8fafc;
-    transition: all 0.3s ease;
-    outline: none;
-}
-
-input:focus {
-    background-color: #fff;
-    border-color: #007bff;
-    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
-}
-
-/* Botão moderno */
-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 14px;
-    font-size: 1rem;
+    max-width: 760px;
+  }
+  
+  h2{
+    font-size: 15px;
     font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 0.5rem;
-}
-
-button:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
-}
-
-button:active {
-    transform: scale(0.98);
-}
+    color: var(--text);
+    margin-bottom: 8px;
+    width: 100%;
+    max-width: 760px;
+  }
+  
+  #lista{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  #lista li > div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+  
+  #lista li p{
+    color: var(--text);
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  #lista li button{
+    font-size: 13px;
+    padding: 6px 10px;
+    flex-shrink: 0;
+  }
+  
+  /* Botão de confirmar horário */
+  main > button{
+    align-self: flex-start;
+    width: auto;
+  }
+  
+  @media (max-width: 720px){
+    body{
+      grid-template-columns: 1fr;
+    }
+    .sidebar{
+      flex-direction: row;
+      align-items: center;
+      overflow-x: auto;
+    }
+    .sidebar nav{
+      flex-direction: row;
+    }
+  }

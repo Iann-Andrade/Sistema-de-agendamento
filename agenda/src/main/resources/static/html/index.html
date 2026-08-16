@@ -3,14 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/theme.css">
         <link rel="stylesheet" href="/css/style.css">
         <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.css" rel="stylesheet">
+        <!--Biblioteca do Calendário-->
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
+        <script type ="module" src="/javascript/index.js"></script>
         <title>Agendamento</title>
     </head>
     <body>
 
         <aside class="sidebar"> 
-            <img src="" alt="logotipo" >
+            <img src="/agenda/src/main/resources/static/logoMenu.jpeg" alt="logotipo" >
 
             <nav>
                 <a href="#inicio">Home</a>
@@ -26,16 +30,33 @@
         <main>
 
             <h1>Agenda de serviços</h1>
+            
+            <div id="calendario-horarios">
+                <h2>Realize o agendamento da sua consulta abaixo!</h2>
 
-            <div id="calendar">
-
+                <div id="calendar">
+    
+                </div>
+    
+                <!--lista de horários disponíiveis-->
+                <div id="lista-horarios">
+                    <div id="horarios"></div>
+                    <button id="btn-agendar" type="button">Agendar</button>
+                </div>
             </div>
 
-            <!--lista de horários disponíiveis-->
-            <div id="lista-horarios">
-                <div id="horarios"></div>
-            </div>
-            <button onclick="criarAgendamento()">Confirmar Horário</button>
+                <!--Este é o espaço para espelhar os agendamentos apenas de quem criou-->
+                <div class="meus-agendamentos">
+
+                    <h2>Meus agendamentos</h2>
+
+                    <div id="div-meus-agendamentos">
+                        <ul id="lista-meus-agendamentos">
+
+                        </ul>
+                    </div>
+
+                </div>
 
                 <h2>Lista:</h2>
                 <div id="div-agendamentos">
@@ -47,221 +68,5 @@
                 
             </footer>
             
-            <!--Biblioteca do Calendário-->
-            <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
-            <script>
-                
-                if (!localStorage.getItem("token")){
-                    window.location.href = "login.html"
-                }
-                
-                //variavel para o agendamento
-                let dataSelecionada = "";
-                let horarioSelecionado = "";
-
-                //Inicia Calendário para agendamento
-                document.addEventListener('DOMContentLoaded', function() {
-                const calendarEl = document.getElementById('calendar');
-
-                const calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    locale: 'pt-br',
-
-                    //Capturar informações do click
-                    dateClick: async function(info){
-                        
-                        dataSelecionada = info.dateStr;
-
-                        const horarios = 
-                            await buscarHorariosDisponiveis(
-                                dataSelecionada
-                            );
-
-                        renderizarHorarios(horarios);
-                        console.log(info.dateStr);
-                        console.log(horarios);
-                    }
-                });
-                
-                    calendar.render();
-                        
-                });
-
-                //Cria função de verificar horários disponíveis
-                async function buscarHorariosDisponiveis(data){
-                     const response = await fetch(
-                        `http://localhost:8080/agendamentos/horarios-disponiveis?data=${data}`,{
-
-                        method: "GET"}
-                    );
-
-                        return await response.json();
-
-                    };
-
-
-                    function renderizarHorarios(horarios){
-
-                       const container =
-                            document.getElementById("horarios");
-
-                        container.innerHTML = "";
-
-                        horarios.forEach(horario => {
-
-                            const btn =
-                                document.createElement("button");
-
-                            btn.textContent = horario;
-                            
-                            
-                            btn.addEventListener("click", () => {
-                                
-                                horarioSelecionado = horario;
-
-                                console.log(horarioSelecionado);
-                                
-                            });
-
-                            container.style.display = "block";
-                            
-                            container.appendChild(btn);
-                            
-                        });
-
-                        //Botão de fechar janela de horários disponíveis
-                        const fecharLista = 
-                            document.createElement("button");
-
-                        fecharLista.textContent = "Fechar lista"
-
-                        fecharLista.addEventListener("click", () =>{
-                            document.getElementById("horarios").style.display = "none";
-                        });
-
-                        container.appendChild(fecharLista);
-                        
-                    }
-
-               
-
-                //Criar agendamento
-                function criarAgendamento(){
-                    const agendamento = {
-                        data: dataSelecionada,
-                        hora: horarioSelecionado,
-                    };
-                    
-                    
-                    
-                fetch("http://localhost:8080/agendamentos",{
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(agendamento)
-                
-                })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                    listar();
-                })
-                .catch(ErrorEvent =>{
-                    console.log("deu erro ao criar agendamento");
-                });
-            }
-
-            function listar(){
-
-                fetch("http://localhost:8080/agendamentos")
-                .then(res => res.json())
-                .then(data => {
-                    const lista = document.getElementById("lista"); 
-                    lista.innerHTML = "";
-                    
-                    let contador = 1;
-                    
-                    function gerarId (){
-                        return contador++;
-                    };
-                    
-                    data.forEach(a => {
-
-                        //Cria botão de excluir agendamento e adiciona a function
-                        const excluirAgendamento = document.createElement("button");
-                        excluirAgendamento.innerText = "Excluir";
-                        excluirAgendamento.type = "button";
-
-                        excluirAgendamento.onclick = function(e){
-                            e.preventDefault();
-                            e.stopPropagation();
-
-                            fetch(`http://localhost:8080/agendamentos/${a.id}`, {
-                                method: "DELETE",
-                                asides: {
-                                    "Content-Type": "application/json"
-                                }
-                            })
-                            .then(res => {
-                                console.log("STATUS:", res.status);
-                                return res.text();
-                            })
-                            .then(() =>{
-                                listar();
-                            })
-                            .catch(err => console.error(err));
-                        };
-                        
-                        //Cria o botão de confirmar presença
-                        const confirmar = document.createElement("button");
-                        confirmar.innerText = "Confirmar Presença"
-                        //Função para atualizar status do agendamento
-                        confirmar.onclick = function(){
-                        fetch (`http://localhost:8080/agendamentos/confirmar/${a.id}`, {
-                            method: "PUT"
-                        })
-                        .then(response =>{
-                            if(response.ok){
-                                listar();
-                            }
-                        });
-                    };
-                        
-                        //Cria um elemnto de DIV e pucha o excluirAgendamento
-                        const item = document.createElement("div");
-                        item.id = a.id;
-
-                        const texto = document.createElement("p");
-
-                        texto.innerText =
-                            a.nomeCliente + " - " +
-                            a.data + " " +
-                            a.hora + " - " +
-                            a.descricao + " - " +
-                            a.statusDescricao;
-
-                        item.appendChild(texto);
-                        item.appendChild(excluirAgendamento);
-                        item.appendChild(confirmar);
-
-                        //Cria uma lista ordenada no html
-                        const list = document.createElement("li");;
-                        
-                        //Adiciona item no list
-                        list.appendChild(item);
-
-                        //Adicina list ao lista
-                        lista.appendChild(list);
-                        
-                        
-                        
-                        }
-                    )});
-                };
-            listar();
-
-            </script>
     </body>
     </html>
